@@ -3,6 +3,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
+const API_BASE_URL = 'http://127.0.0.1:8000';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -16,7 +17,7 @@ export const AuthProvider = ({ children }) => {
       if (token) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         try {
-          const { data } = await axios.get('/api/me/');
+          const { data } = await axios.get(`${API_BASE_URL}/api/me/`);
           setUser(data);
         } catch (error) {
           console.error('Failed to fetch user', error);
@@ -31,11 +32,11 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (username, password) => {
     try {
-      const { data } = await axios.post('/api/auth/token/', { username, password });
+      const { data } = await axios.post(`${API_BASE_URL}/api/auth/token/`, { username, password });
       localStorage.setItem('access_token', data.access);
       localStorage.setItem('refresh_token', data.refresh);
       axios.defaults.headers.common['Authorization'] = `Bearer ${data.access}`;
-      const { data: userData } = await axios.get('/api/me/');
+      const { data: userData } = await axios.get(`${API_BASE_URL}/api/me/`);
       setUser(userData);
       router.push('/dashboard');
     } catch (error) {
@@ -46,7 +47,7 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (userData) => {
     try {
-      await axios.post('/api/register/', userData);
+      await axios.post(`${API_BASE_URL}/api/register/`, userData);
       await login(userData.username, userData.password);
     } catch (error) {
       console.error('Signup failed', error);
@@ -70,7 +71,7 @@ export const AuthProvider = ({ children }) => {
         originalRequest._retry = true;
         try {
           const refreshToken = localStorage.getItem('refresh_token');
-          const { data } = await axios.post('/api/auth/token/refresh/', { refresh: refreshToken });
+          const { data } = await axios.post(`${API_BASE_URL}/api/auth/token/refresh/`, { refresh: refreshToken });
           localStorage.setItem('access_token', data.access);
           axios.defaults.headers.common['Authorization'] = `Bearer ${data.access}`;
           originalRequest.headers['Authorization'] = `Bearer ${data.access}`;
