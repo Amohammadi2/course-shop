@@ -1,0 +1,38 @@
+
+> course-shop@0.1.0 dev
+> next dev
+
+⚠ Port 3000 is in use by an unknown process, using available port 3004 instead.
+▲ Next.js 16.1.1 (Turbopack)
+- Local:         http://localhost:3004
+- Network:       http://192.168.0.2:3004
+- Environments: .env.local
+
+✓ Starting...
+✓ Ready in 1900ms
+○ Compiling / ...
+⨯ ./public/animation.json
+Code generation for chunk item errored
+An error occurred while generating the chunk item [project]/public/animation.json (json)
+
+Caused by:
+- Unable to make a module from invalid JSON: expected value at line 1 column 1
+
+Debug info:
+- An error occurred while generating the chunk item [project]/public/animation.json (json)
+- Execution of <JsonChunkItem as EcmascriptChunkItem>::content failed
+- Unable to make a module from invalid JSON: expected value at line 1 column 1
+    at .
+         | v
+       1 + <?xml version="1.0" encoding="UTF-8"?>
+         | ^
+       2 | <Error><Code>AccessDenied</Code><Message>Access Denied</Message><RequestId>7D58Z5ZBAH7FWEEF</Reque...ostId>p7ImHepOcqQpieRUCVPQaUVpqWgZzrtrtKuLTjlrP+/psJZ86gOtDTUD8d50hWlbDNdc54fOUZo=</HostId></Error>
+
+Import trace:
+  Client Component SSR:
+    ./public/animation.json
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+
+ GET / 500 in 12.4s (compile: 12.1s, render: 275ms)
